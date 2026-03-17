@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CNS Cipher Lab — Cryptography Simulator</title>
+  <meta name="description" content="Interactive simulator for Classical and Modern Cryptography techniques including Caesar, Vigenère, Playfair, Hill, RSA, and Diffie-Hellman.">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+  <div class="logo" onclick="goHome()" id="logo-btn">
+    <div class="logo-icon">🔐</div>
+    <div>
+      <div class="logo-text">CNS Cipher Lab</div>
+      <div class="logo-sub" id="logo-sub">Cryptography Simulator</div>
+    </div>
+  </div>
+  <nav class="nav-breadcrumb" id="nav-breadcrumb"></nav>
+  <button class="back-btn" id="back-btn" onclick="goHome()">← Back to Menu</button>
+</header>
+
+<!-- ========== HOME VIEW ========== -->
+<div id="home-view">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-badge">🎓 CNS Lab — Computer Network Security</div>
+    <h1>Cryptography<br>Simulator Suite</h1>
+    <p>Explore, encrypt, and decrypt with 11 interactive cipher simulators. Step-by-step traces for every algorithm.</p>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num">11</span><span class="stat-label">Simulators</span></div>
+      <div class="stat"><span class="stat-num">4</span><span class="stat-label">Categories</span></div>
+      <div class="stat"><span class="stat-num">100%</span><span class="stat-label">Client-side</span></div>
+    </div>
+  </section>
+
+  <!-- MONO-ALPHABETIC -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(0,212,255,0.12)">🔤</div>
+      <span class="section-title">Mono-alphabetic Substitution</span>
+      <span class="section-count">3 ciphers</span>
+    </div>
+    <div class="cards-grid">
+
+      <div class="cipher-card" onclick="showSimulator('caesar')"
+           style="--card-accent:linear-gradient(90deg,#00d4ff,#7c3aed);--card-icon-bg:rgba(0,212,255,0.1)">
+        <div class="card-icon">🔤</div>
+        <div class="card-title">Caesar Cipher</div>
+        <div class="card-desc">Shift each letter by a fixed number of positions. The simplest classical cipher used by Julius Caesar.</div>
+        <div class="card-tags">
+          <span class="tag">Substitution</span>
+          <span class="tag">Shift</span>
+          <span class="tag">Mono-alpha</span>
+        </div>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <div class="cipher-card" onclick="showSimulator('multiplicative')"
+           style="--card-accent:linear-gradient(90deg,#7c3aed,#ec4899);--card-icon-bg:rgba(124,58,237,0.1)">
+        <div class="card-icon">✖️</div>
+        <div class="card-title">Multiplicative Cipher</div>
+        <div class="card-desc">Each letter is multiplied by a key modulo 26. Key must be coprime with 26 to ensure decryptability.</div>
+        <div class="card-tags">
+          <span class="tag purple">Substitution</span>
+          <span class="tag purple">Multiply</span>
+          <span class="tag purple">Mono-alpha</span>
+        </div>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <div class="cipher-card" onclick="showSimulator('affine')"
+           style="--card-accent:linear-gradient(90deg,#ec4899,#f59e0b);--card-icon-bg:rgba(236,72,153,0.1)">
+        <div class="card-icon">📐</div>
+        <div class="card-title">Affine Cipher</div>
+        <div class="card-desc">Combines shift and multiplication: E(x) = (ax + b) mod 26. Generalizes Caesar and Multiplicative ciphers.</div>
+        <div class="card-tags">
+          <span class="tag orange">Substitution</span>
+          <span class="tag orange">Affine</span>
+          <span class="tag orange">Mono-alpha</span>
+        </div>
+        <div class="card-arrow">→</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- POLY-ALPHABETIC -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(16,185,129,0.12)">🔑</div>
+      <span class="section-title">Poly-alphabetic Substitution</span>
+      <span class="section-count">4 ciphers</span>
+    </div>
+    <div class="cards-grid">
+
+      <div class="cipher-card" onclick="showSimulator('vernam')"
+           style="--card-accent:linear-gradient(90deg,#10b981,#00d4ff);--card-icon-bg:rgba(16,185,129,0.1)">
+        <div class="card-icon">🔗</div>
+        <div class="card-title">Vernam Cipher</div>
+        <div class="card-desc">XOR-based one-time pad. When key is truly random and used once, provides perfect secrecy.</div>
+        <div class="card-tags">
+          <span class="tag green">XOR</span>
+          <span class="tag green">One-Time Pad</span>
+          <span class="tag green">Poly-alpha</span>
+        </div>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <div class="cipher-card" onclick="showSimulator('vigenere')"
+           style="--card-accent:linear-gradient(90deg,#f59e0b,#ef4444);--card-icon-bg:rgba(245,158,11,0.1)">
+        <div class="card-icon">🔑</div>
+        <div class="card-title">Vigenère Cipher</div>
+        <div class="card-desc">Repeating keyword determines variable shifts. Called "indéchiffrable" for centuries until broken by Kasiski.</div>
+        <div class="card-tags">
+          <span class="tag orange">Keyword</span>
+          <span class="tag orange">Poly-alpha</span>
+        </div>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <div class="cipher-card" onclick="showSimulator('playfair')"
+           style="--card-accent:linear-gradient(90deg,#06b6d4,#7c3aed);--card-icon-bg:rgba(6,182,212,0.1)">
+        <div class="card-icon">🟦</div>
+        <div class="card-title">Playfair Cipher</div>
+        <div class="card-desc">Encrypts digrams (letter pairs) using a 5×5 matrix. I/J share a cell. Three encryption rules based on positions.</div>
+        <div class="card-tags">
+          <span class="tag">Digram</span>
+          <span class="tag">5×5 Matrix</span>
+          <span class="tag">Poly-alpha</span>
+        </div>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <div class="cipher-card" onclick="showSimulator('hill')"
+           style="--card-accent:linear-gradient(90deg,#8b5cf6,#ec4899);--card-icon-bg:rgba(139,92,246,0.1)">
+        <div class="card-icon">🔢</div>
+        <div class="card-title">Hill Cipher</div>
+        <div class="card-desc">Linear algebra-based cipher using matrix multiplication mod 26. A polygraphic substitution technique.</div>
+        <div class="card-tags">
+          <span class="tag purple">Matrix</span>
+          <span class="tag purple">Linear Algebra</span>
+          <span class="tag purple">Poly-alpha</span>
+        </div>
+        <div class="card-arrow">→</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TRANSPOSITION -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(239,68,68,0.12)">↔️</div>
+      <span class="section-title">Transposition Techniques</span>
+      <span class="section-count">2 ciphers</span>
+    </div>
+    <div class="cards-grid">
+
+      <div class="cipher-card" onclick="showSimulator('keyless')"
+           style="--card-accent:linear-gradient(90deg,#ef4444,#f97316);--card-icon-bg:rgba(239,68,68,0.1)">
+        <div class="card-icon">↔️</div>
+        <div class="card-title">Keyless Transposition</div>
+        <div class="card-desc">Rearranges characters by writing into a grid and reading column by column. No keyword needed — pure positional rearrangement.</div>
+        <div class="card-tags">
+          <span class="tag" style="color:#f87171;background:rgba(239,68,68,0.08);border-color:rgba(239,68,68,0.2)">Rail-Fence Style</span>
+          <span class="tag" style="color:#f87171;background:rgba(239,68,68,0.08);border-color:rgba(239,68,68,0.2)">Transposition</span>
+        </div>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <div class="cipher-card" onclick="showSimulator('keyed')"
+           style="--card-accent:linear-gradient(90deg,#f97316,#fbbf24);--card-icon-bg:rgba(249,115,22,0.1)">
+        <div class="card-icon">🗝️</div>
+        <div class="card-title">Keyed Transposition</div>
+        <div class="card-desc">Uses a keyword to define column-reading order. Alphabetical ranking of key letters determines the column sequence.</div>
+        <div class="card-tags">
+          <span class="tag orange">Keyed</span>
+          <span class="tag orange">Columnar</span>
+          <span class="tag orange">Transposition</span>
+        </div>
+        <div class="card-arrow">→</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODERN / ASYMMETRIC -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(0,212,255,0.12)">🔐</div>
+      <span class="section-title">Modern Asymmetric Cryptography</span>
+      <span class="section-count">2 algorithms</span>
+    </div>
+    <div class="cards-grid">
+
+      <div class="cipher-card" onclick="showSimulator('rsa')"
+           style="--card-accent:linear-gradient(90deg,#00d4ff,#10b981);--card-icon-bg:rgba(0,212,255,0.1)">
+        <div class="card-icon">🔐</div>
+        <div class="card-title">RSA Cryptosystem</div>
+        <div class="card-desc">Rivest-Shamir-Adleman: public-key encryption based on difficulty of factoring large prime products. Key generation, encrypt, and decrypt.</div>
+        <div class="card-tags">
+          <span class="tag">Asymmetric</span>
+          <span class="tag">Public Key</span>
+          <span class="tag">Prime Numbers</span>
+        </div>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <div class="cipher-card" onclick="showSimulator('dh')"
+           style="--card-accent:linear-gradient(90deg,#7c3aed,#00d4ff);--card-icon-bg:rgba(124,58,237,0.1)">
+        <div class="card-icon">🤝</div>
+        <div class="card-title">Diffie-Hellman Exchange</div>
+        <div class="card-desc">First public-key protocol ever published (1976). Establishes shared secret over insecure channel using modular exponentiation.</div>
+        <div class="card-tags">
+          <span class="tag purple">Key Exchange</span>
+          <span class="tag purple">Discrete Log</span>
+          <span class="tag purple">Public Key</span>
+        </div>
+        <div class="card-arrow">→</div>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- /#home-view -->
+
+<!-- ========== SIMULATOR VIEW ========== -->
+<div id="simulator-view"></div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <p>CNS Cipher Lab &nbsp;|&nbsp; Computer Network Security &nbsp;|&nbsp; Built with <span>♥</span> for learning cryptography</p>
+</footer>
+
+<script src="js/ciphers.js"></script>
+<script src="js/ui.js"></script>
+<script>
+  // Wire up home navigation
+  function goHome() {
+    showHome();
+  }
+
+  // Initial state
+  document.addEventListener('DOMContentLoaded', () => {
+    showHome();
+  });
+</script>
+</body>
+</html>
